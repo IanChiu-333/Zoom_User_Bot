@@ -9,6 +9,8 @@ import webbrowser
 import time
 import random
 
+#Opens zoom in new tab
+webbrowser.open_new_tab("https://app.zoom.us/wc")
 
 def Create_Profiles(accounts):
     random_times = [0.5, 0.6, 0.7, 0.8, 0.9]
@@ -74,9 +76,6 @@ def Create_Profiles(accounts):
     #Change to run more times
     for i in range(accounts):
 
-        #Opens zoom in new tab
-        webbrowser.open_new_tab("https://app.zoom.us/wc")
-
         time.sleep(0.25)
 
         loc_Extension = pyautogui.locateOnScreen("Extensions.png", grayscale=True, confidence=.7)
@@ -109,15 +108,13 @@ def Create_Profiles(accounts):
         pyautogui.write("766 719 8474")
 
         #Moves past ID screen
-        loc_Join_Meeting_2 = pyautogui.locateOnScreen("Zoom_Join_Meeting2.png", grayscale=True, confidence=.7)
-        pyautogui.moveTo(loc_Join_Meeting_2, duration=random.choice(random_times))
-        pyautogui.click()
+        pyautogui.press('enter')
 
         #Load Buffer
         time.sleep(2)
 
         #Writes name and signs on
-        loc_name_input = pyautogui.locateOnScreen("Name_Input.png", grayscale=True, confidence=.8)
+        loc_name_input = pyautogui.locateOnScreen("Name_Input.png", grayscale=True, confidence=.9)
         pyautogui.moveTo(loc_name_input, duration=random.choice(random_times))
         pyautogui.click()
 
@@ -136,7 +133,7 @@ def Create_Profiles(accounts):
         pyautogui.press('enter')
 
         #Load Buffer
-        time.sleep(5)
+        time.sleep(10)
 
         #Joins Audio
         loc_join_audio = pyautogui.locateOnScreen("Join_Audio.png", grayscale=True, confidence=.8)
@@ -145,7 +142,7 @@ def Create_Profiles(accounts):
         
 
 
-print(pyautogui.alert(text="ENSURE YOU HAVE pyautogui, pillow, opencv_python, AND sessionbox FROM THE CHROME WEB STORE INSTALLED", title="ALERT", button='YUP'))
+print(pyautogui.alert(text="ENSURE YOU HAVE pyautogui, pillow, keyboard, webbrowser, opencv_python, AND sessionbox FROM THE CHROME WEB STORE INSTALLED", title="ALERT", button='YUP'))
 
 accounts = pyautogui.prompt(text="Enter the number of zoom accounts you'd like", title="Zoom Accounts", default='default')
 Create_Profiles(int(accounts))
