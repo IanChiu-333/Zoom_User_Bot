@@ -144,7 +144,7 @@ def Create_Profiles(accounts):
 
 print(pyautogui.alert(text="ENSURE YOU HAVE pyautogui, pillow, keyboard, webbrowser, opencv_python, AND sessionbox FROM THE CHROME WEB STORE INSTALLED", title="ALERT", button='YUP'))
 
-accounts = pyautogui.prompt(text="Enter the number of zoom accounts you'd like", title="Zoom Accounts", default='default')
+accounts = pyautogui.prompt(text="Enter the number of zoom accounts you'd like", title="Zoom Accounts", default='5')
 Create_Profiles(int(accounts))
 
 print(pyautogui.alert(text="Succesfully created" + accounts, title="Finished", button='Yay'))
