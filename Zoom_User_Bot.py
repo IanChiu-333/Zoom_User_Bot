@@ -12,7 +12,7 @@ import random
 #Opens zoom in new tab
 webbrowser.open_new_tab("https://app.zoom.us/wc")
 
-def Create_Profiles(accounts):
+def Create_Profiles(accounts, zoom_code):
     random_times = [0.5, 0.6, 0.7, 0.8, 0.9]
     
     #Names Database
@@ -72,12 +72,13 @@ def Create_Profiles(accounts):
         "Mehta", "Chopra", "Patil", "Reddy", "Soni", "Verma", "Mittal", "Shah", "Bhatt",
         "Malhotra", "Yadav", "Joshi"
     ]
+    
+    first = True
 
     #Change to run more times
     for i in range(accounts):
 
         time.sleep(0.25)
-
         loc_Extension = pyautogui.locateOnScreen("Extensions.png", grayscale=True, confidence=.7)
         pyautogui.moveTo(loc_Extension, duration=random.choice(random_times))
         pyautogui.click()
@@ -90,28 +91,28 @@ def Create_Profiles(accounts):
 
         time.sleep(0.75)
 
-        pyautogui.hotkey('ctrl', 'shift', 'x')
+        #Need to figure out how to open up temporary sessions not the cloud sessions
+        pyautogui.hotkey('ctrl', 'shift', 'y')
 
-        time.sleep(2)
+        time.sleep(1)
 
-        pyautogui.press('enter')
+        if first == True:
+            #Finds Join Meeting button
+            time.sleep(1) #Needed, for some reason the prediction isn't so good without waiting
+            loc_Join_Meeting = pyautogui.locateOnScreen("Zoom_Join_Meeting.png", grayscale=True, confidence=.8)
 
-        #Finds Join Meeting button
-        time.sleep(1) #Needed, for some reason the prediction isn't so good without waiting
-        loc_Join_Meeting = pyautogui.locateOnScreen("Zoom_Join_Meeting.png", grayscale=True, confidence=.8)
+            #Joins Zoom Room
+            pyautogui.moveTo(loc_Join_Meeting, duration=random.choice(random_times))
+            pyautogui.click()
 
-        #Joins Zoom Room
-        pyautogui.moveTo(loc_Join_Meeting, duration=random.choice(random_times))
-        pyautogui.click()
+            #Replace with meeting ID number
+            pyautogui.write(zoom_code)
 
-        #Replace with meeting ID number
-        pyautogui.write("766 719 8474")
-
-        #Moves past ID screen
-        pyautogui.press('enter')
-
+            #Moves past ID screen
+            pyautogui.press('enter')
+        
         #Load Buffer
-        time.sleep(2)
+        time.sleep(3)
 
         #Writes name and signs on
         loc_name_input = pyautogui.locateOnScreen("Name_Input.png", grayscale=True, confidence=.9)
@@ -133,21 +134,25 @@ def Create_Profiles(accounts):
         pyautogui.press('enter')
 
         #Load Buffer
-        time.sleep(10)
+        time.sleep(8)
 
         #Joins Audio
         loc_join_audio = pyautogui.locateOnScreen("Join_Audio.png", grayscale=True, confidence=.8)
         pyautogui.moveTo(loc_join_audio, duration=random.choice(random_times))
         pyautogui.click()
+
+        first = False
         
 
 
 print(pyautogui.alert(text="ENSURE YOU HAVE pyautogui, pillow, keyboard, webbrowser, opencv_python, AND sessionbox FROM THE CHROME WEB STORE INSTALLED", title="ALERT", button='YUP'))
 
 accounts = pyautogui.prompt(text="Enter the number of zoom accounts you'd like", title="Zoom Accounts", default='5')
-Create_Profiles(int(accounts))
+zoom_code = pyautogui.prompt(text="Enter the room's zoom code", title="Zoom Room Code", default='111111111')
 
-print(pyautogui.alert(text="Succesfully created" + accounts, title="Finished", button='Yay'))
+Create_Profiles(int(accounts), zoom_code)
+
+print(pyautogui.alert(text="Succesfully created " + accounts + " accounts", title="Finished", button='Yay'))
 
 
 
